@@ -38,6 +38,7 @@ function handleSubmit() {
       title="Contact Now!"
       subtitle="Get in touch with us"
       :disabled="processing"
+      :loading="processing"
       style="position:sticky; top: 5rem"
   >
 
