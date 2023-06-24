@@ -1,26 +1,24 @@
 <script setup lang="ts">
-import {RealEstateItem} from "#components";
 
-const config = useRuntimeConfig()
-
-let state = reactive({
-  items: [],
-})
-
-onMounted(async () => {
-  console.log(state.items)
-  const response = await fetch(`${config.public.HEC_API_HOST}/real-estates`)
-  state.items = await response.json()
-  console.log(state.items)
+const props = defineProps({
+  items: {
+    type: Array,
+    default() {
+      return []
+    }
+  },
 })
 
 </script>
 
 <template>
-  <p>here comes the list</p>
-  <ul>
-    <RealEstateItem v-for="item in state.items" :key="item.id" :item="item"/>
-  </ul>
+  <v-container>
+    <v-row>
+      <v-col v-for="item in items" :key="item.id" cols="12" sm="6" lg="4" xl="3" >
+        <RealEstateItem :item="item"/>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style scoped>
