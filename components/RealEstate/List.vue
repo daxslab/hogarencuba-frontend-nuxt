@@ -12,7 +12,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-col v-for="item in items" :key="item.id" cols="12" sm="6" lg="4" xl="3" >
         <RealEstateItem :item="item"/>

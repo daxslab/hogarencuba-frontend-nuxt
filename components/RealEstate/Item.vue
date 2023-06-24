@@ -34,10 +34,10 @@ function colorPerPrice(item) {
       :color="full === 0 ? colorPerPrice(item) : undefined"
       class="fill-height d-flex flex-column">
 
-    <NuxtLink :to="`/${item.id}`">
+    <NuxtLink v-if="full === 0" :to="`/${item.id}`">
       <v-img
           :src="item.poster"
-          :height="full == 0 ? '300' : 'auto'"
+          height="300"
           cover
       />
     </NuxtLink>
@@ -53,6 +53,13 @@ function colorPerPrice(item) {
       </v-card-subtitle>
     </v-card-item>
 
+    <v-img
+        v-if="full"
+        :src="item.poster"
+        height="auto"
+        cover
+    />
+
     <v-card-text tag="p">
       {{ full == 0 ? item.description.slice(0, 300) : item.description }}
     </v-card-text>
@@ -65,9 +72,9 @@ function colorPerPrice(item) {
     </v-card-actions>
 
     <section v-if="full">
-      <v-container>
+      <v-container fluid>
         <v-row>
-          <v-col v-for="image in item.images" :key="image.id" cols="4">
+          <v-col v-for="image in item.images" :key="image.id" cols="6" lg="4" xl="3" >
             <v-img
                 :src="image.url"
                 :lazy-src="image.thumbnail"
@@ -97,17 +104,22 @@ function colorPerPrice(item) {
 </template>
 
 <style scoped>
+h1 {
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
 h1 > a,
 h2 > a {
   text-decoration: none;
   color: inherit;
 }
 
-.v-card .v-card-title{
+.v-card .v-card-title {
   line-height: 1.2;
 }
 
-.v-card-title > a{
+.v-card-title > a {
   white-space: normal;
   font-weight: bold;
   margin-bottom: 1rem;
