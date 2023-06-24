@@ -103,10 +103,13 @@ h2 > a {
   color: inherit;
 }
 
-.v-card-title {
+.v-card .v-card-title{
+  line-height: 1.2;
+}
+
+.v-card-title > a{
   white-space: normal;
   font-weight: bold;
-  line-height: 1.2;
   margin-bottom: 1rem;
 }
 </style>
