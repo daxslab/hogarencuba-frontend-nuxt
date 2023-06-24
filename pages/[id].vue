@@ -22,7 +22,7 @@ onMounted(async () => {
       <RealEstateItem :item="state.item" :full="1"/>
     </v-col>
     <v-col cols="4">
-      The contact form
+      <SiteContactForm :item="state.item" />
     </v-col>
   </v-row>
   <section v-if="state.item && state.item.related.length">
