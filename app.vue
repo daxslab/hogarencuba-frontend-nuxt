@@ -1,6 +1,22 @@
 <template>
   <v-layout class="rounded rounded-md">
-    <v-app-bar title="HogarEnCuba"></v-app-bar>
+    <v-app-bar>
+
+      <v-app-bar-title>
+        <NuxtLink to="/">HogarEnCuba</NuxtLink>
+      </v-app-bar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn to="/about">
+        About
+      </v-btn>
+
+      <v-btn to="/contact">
+        Contact
+      </v-btn>
+
+    </v-app-bar>
 
     <v-navigation-drawer>
       <RealEstateSearchForm/>
