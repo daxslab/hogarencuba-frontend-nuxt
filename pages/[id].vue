@@ -1,31 +1,29 @@
 <script setup lang="ts">
-
-const config = useRuntimeConfig()
 const route = useRoute()
 
-let state = reactive({
-  item: null,
-})
-
-onMounted(async () => {
-  const response = await fetch(`${config.public.HEC_API_HOST}/real-estates/${route.params.id}?expand=images,related`)
-  state.item = await response.json()
+const {data, pending, refresh, error} = await useHecFetch(`/real-estates/${route.params.id}`, {
+  query: {
+    expand: "images,related"
+  },
+  onResponse({request, response, options}) {
+    console.log("/real-estates/:id", request, response, options);
+  }
 })
 
 </script>
 
 <template>
   <article>
-    <v-row v-if="state.item">
-      <v-col cols="8">
-        <RealEstateItem :item="state.item" :full="1"/>
+    <v-row v-if="!pending">
+      <v-col cols="12" md="8">
+        <RealEstateItem :item="data" :full="1"/>
       </v-col>
-      <v-col cols="4">
-        <SiteContactForm :item="state.item"/>
+      <v-col cols="12" md="4">
+        <SiteContactForm :item="data"/>
       </v-col>
-      <v-col v-if="state.item && state.item.related.length" tag="section" cols="12">
+      <v-col v-if="data.related" tag="section" cols="12">
         <h2>Similar properties</h2>
-        <RealEstateList :items="state.item.related"/>
+        <RealEstateList :items="data.related"/>
       </v-col>
       <p v-else>
         Loading...
