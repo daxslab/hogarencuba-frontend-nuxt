@@ -13,10 +13,27 @@ const props = defineProps({
   }
 })
 
+function colorPerPrice(item) {
+  let color = 'success';
+  if (item.price <= 10000) {
+    color = 'secondary';
+  } else if (item.price > 10000 && item.price <= 50000) {
+    color = 'warning'
+  } else if (item.price > 50000 && item.price <= 100000) {
+    color = 'info'
+  }
+  return color;
+}
+
 </script>
 
 <template>
-  <v-card v-if="item" tag="article" class="fill-height d-flex flex-column">
+  <v-card
+      v-if="item"
+      tag="article"
+      :color="full === 0 ? colorPerPrice(item) : undefined"
+      class="fill-height d-flex flex-column">
+
     <NuxtLink :to="`/${item.id}`">
       <v-img
           :src="item.poster"
@@ -39,6 +56,8 @@ const props = defineProps({
     <v-card-text tag="p">
       {{ full == 0 ? item.description.slice(0, 300) : item.description }}
     </v-card-text>
+
+    <v-divider/>
 
     <v-card-actions v-if="full == 0">
       <v-spacer></v-spacer>
@@ -78,8 +97,16 @@ const props = defineProps({
 </template>
 
 <style scoped>
-h1 > a {
+h1 > a,
+h2 > a {
   text-decoration: none;
   color: inherit;
+}
+
+.v-card-title {
+  white-space: normal;
+  font-weight: bold;
+  line-height: 1.2;
+  margin-bottom: 1rem;
 }
 </style>
