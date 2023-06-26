@@ -1,18 +1,14 @@
 <script setup lang="ts">
-const config = useRuntimeConfig()
-
-let state = reactive({
-  items: [],
-})
-
-onMounted(async () => {
-  const response = await fetch(`${config.public.HEC_API_HOST}/real-estates`)
-  state.items = await response.json()
+const {data, pending, refresh, error} = await useHecFetch('/real-estates', {
+  onResponse(request, response, options): Promise<void> | void {
+    console.log('/real-estates', request, response, options)
+  }
 })
 </script>
 
 <template>
-  <RealEstateList :items="state.items"/>
+  <RealEstateList v-if="!pending" :items="data.items"/>
+  <p v-else>Loading...</p>
 </template>
 
 <style scoped>
