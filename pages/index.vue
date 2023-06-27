@@ -1,25 +1,43 @@
 <script setup lang="ts">
 const route = useRoute()
 
-
-const {data, pending: isPending, refresh, error} = await useHecFetch('/real-estates', {
-  query: {
-    page: route.query.page || 1,
-  },
-  onResponse(request, response, options): Promise<void> | void {
-    console.log('/real-estates', request, response, options)
-  }
+const state = ref({
+  page: route.params.page,
+  data: null,
+  pending: null,
+  refresh: null,
+  error: null
 })
+
+watchEffect(async () => {
+
+  console.log(state.value)
+
+  const {data, pending, refresh, error} = await useHecFetch('/real-estates', {
+    query: {
+      page: state.page,
+    },
+    onResponse(request, response, options): Promise<void> | void {
+      console.log('/real-estates', request, response, options)
+    }
+  })
+
+  state.value.data = data
+  state.value.pending= pending
+})
+
 </script>
 
 <template>
+  <PaginatedList
+      v-if="!state.pending"
+      :meta="state.data ? state.data._meta : null"
+      @page-changed="state.page = $event"
+  >
     <RealEstateList
-        v-if="!isPending"
-        :current-page="parseInt(route.query.page) || 1"
-        :items="data.items"
-        :page-count="data._meta.pageCount"
+        :items="state.data ? state.data.items : []"
     />
-    <p v-else>Loading...</p>
+  </PaginatedList>
 </template>
 
 <style scoped>

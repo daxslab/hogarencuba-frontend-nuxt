@@ -3,7 +3,7 @@
     <v-app-bar>
 
       <v-app-bar-title>
-        <NuxtLink to="/">HogarEnCuba</NuxtLink>
+        <NuxtLink to="/" class="text-decoration-none font-weight-black">HogarEnCuba</NuxtLink>
       </v-app-bar-title>
 
       <v-spacer></v-spacer>
@@ -29,8 +29,10 @@
     </v-main>
   </v-layout>
 </template>
+
 <script setup>
 </script>
+
 <style>
 .page-enter-active,
 .page-leave-active {
